@@ -11,7 +11,7 @@
     "type-check": "turbo run type-check",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "pnpm build && changeset publish",
+    "release": "pnpm build && changeset publish --no-git-tag",
     "dev": "turbo run dev",
     "audit": "pnpm audit --recursive"
   },

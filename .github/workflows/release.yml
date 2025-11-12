@@ -29,6 +29,7 @@ jobs:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
           always-auth: true
+          scope: '@udit-org'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -41,6 +42,11 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > $HOME/.npmrc
           echo "@udit-org:registry=https://registry.npmjs.org/" >> $HOME/.npmrc
           echo "//registry.npmjs.org/:always-auth=true" >> $HOME/.npmrc
+          # pnpm이 npm 인증을 사용하도록 설정
+          echo "registry=https://registry.npmjs.org/" >> $HOME/.npmrc
+          cat $HOME/.npmrc
+          # npm 인증 테스트
+          npm whoami --registry=https://registry.npmjs.org/ || true
 
       - name: Create Release Pull Request or Publish
         id: changesets
