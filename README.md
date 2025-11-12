@@ -17,12 +17,12 @@ UDIT에서 개발한 모든 라이브러리와 패키지를 관리하는 monorep
 
 ## 패키지 목록
 
-### @udit/logger
+### @udit-org/logger
 
 유연한 로깅 유틸리티로, 컨텍스트 지원 및 에러 처리를 제공합니다.
 
 ```bash
-pnpm add @udit/logger
+pnpm add @udit-org/logger
 ```
 
 자세한 내용은 [packages/logger/README.md](packages/logger/README.md)를 참조하세요.

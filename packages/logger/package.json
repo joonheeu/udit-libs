@@ -1,5 +1,5 @@
 {
-  "name": "@udit/logger",
+  "name": "@udit-org/logger",
   "version": "0.1.0",
   "description": "A flexible logging utility for JavaScript and TypeScript projects with context support and error handling",
   "type": "module",
@@ -38,7 +38,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/udit/UDIT.git",
+    "url": "https://github.com/udit/udit-libs.git",
     "directory": "packages/logger"
   },
   "publishConfig": {

@@ -1,4 +1,4 @@
-# @udit/logger
+# @udit-org/logger
 
 유연하고 강력한 로깅 유틸리티로, TypeScript와 JavaScript 프로젝트에서 사용할 수 있습니다.
 
@@ -14,17 +14,17 @@
 ## 설치
 
 ```bash
-npm install @udit/logger
+npm install @udit-org/logger
 # 또는
-pnpm add @udit/logger
+pnpm add @udit-org/logger
 # 또는
-yarn add @udit/logger
+yarn add @udit-org/logger
 ```
 
 ## 기본 사용법
 
 ```typescript
-import { logger } from '@udit/logger'
+import { logger } from '@udit-org/logger'
 
 // 간단한 로그
 logger.info('Application started')
@@ -38,7 +38,7 @@ logger.debug('Debug information') // 개발 모드에서만 출력
 ### 커스텀 옵션으로 Logger 생성
 
 ```typescript
-import { Logger } from '@udit/logger'
+import { Logger } from '@udit-org/logger'
 
 const logger = new Logger({
   serviceName: 'my-service',
@@ -58,7 +58,7 @@ logger.info('Service initialized')
 ### 컨텍스트 정보 포함
 
 ```typescript
-import { logger } from '@udit/logger'
+import { logger } from '@udit-org/logger'
 
 logger.info('User logged in', {
   userId: 123,
@@ -70,7 +70,7 @@ logger.info('User logged in', {
 ### 에러 로깅
 
 ```typescript
-import { logger } from '@udit/logger'
+import { logger } from '@udit-org/logger'
 
 try {
   // some code
@@ -83,7 +83,7 @@ try {
 ### 컨텍스트와 에러 함께 사용
 
 ```typescript
-import { logger } from '@udit/logger'
+import { logger } from '@udit-org/logger'
 
 try {
   // some code
@@ -140,7 +140,7 @@ interface LoggerOptions {
 ### 기본 logger 인스턴스
 
 ```typescript
-import { logger } from '@udit/logger'
+import { logger } from '@udit-org/logger'
 
 // NODE_ENV 환경 변수로 개발 모드를 자동 감지
 logger.info('Ready to use')
@@ -162,7 +162,7 @@ logger.info('Ready to use')
 ### Express.js 미들웨어
 
 ```typescript
-import { Logger } from '@udit/logger'
+import { Logger } from '@udit-org/logger'
 import express from 'express'
 
 const logger = new Logger({
@@ -183,7 +183,7 @@ app.use((req, res, next) => {
 ### 에러 핸들러
 
 ```typescript
-import { logger } from '@udit/logger'
+import { logger } from '@udit-org/logger'
 
 app.use((err, req, res, next) => {
   logger.error('Unhandled error', {
