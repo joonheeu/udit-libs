@@ -1,69 +1,58 @@
 name: Release
 
 on:
-    push:
-        branches:
-            - main
-    workflow_dispatch:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-    release:
-        name: Release
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - name: Setup pnpm
-              uses: pnpm/action-setup@v2
-              with:
-                  version: 10
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "20"
-                  cache: "pnpm"
-                  registry-url: "https://registry.npmjs.org"
-                  always-auth: true
-                  scope: "@udit-org"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+          registry-url: "https://registry.npmjs.org"
+          always-auth: true
+          scope: "@udit-org"
 
-            - name: Install dependencies
-              run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-            - name: Build
-              run: pnpm build
+      - name: Build
+        run: pnpm build
 
-            - name: Configure npm for publishing
-              run: |
-                  # npm 인증 설정 (changesets action이 사용할 수 있도록)
-                  echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > $HOME/.npmrc
-                  echo "@udit-org:registry=https://registry.npmjs.org/" >> $HOME/.npmrc
-                  echo "//registry.npmjs.org/:always-auth=true" >> $HOME/.npmrc
-                  echo "registry=https://registry.npmjs.org/" >> $HOME/.npmrc
-                  # changesets action이 사용하는 경로에도 설정
-                  mkdir -p $HOME/.config
-                  cp $HOME/.npmrc $HOME/.config/.npmrc || true
-                  # 인증 확인
-                  echo "=== .npmrc 내용 ==="
-                  cat $HOME/.npmrc
-                  echo "=== npm 인증 확인 ==="
-                  npm whoami --registry=https://registry.npmjs.org/ || echo "인증 실패"
+      - name: Configure npm for publishing
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > $HOME/.npmrc
+          echo "@udit-org:registry=https://registry.npmjs.org/" >> $HOME/.npmrc
+          echo "//registry.npmjs.org/:always-auth=true" >> $HOME/.npmrc
+          echo "registry=https://registry.npmjs.org/" >> $HOME/.npmrc
 
-            - name: Create Release Pull Request or Publish
-              id: changesets
-              uses: changesets/action@v1
-              with:
-                  publish: pnpm release
-                  version: pnpm version
-                  commit: "chore: version packages"
-                  title: "chore: version packages"
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-                  # changesets action이 우리 .npmrc를 사용하도록
-                  NPM_CONFIG_USERCONFIG: $HOME/.npmrc
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm release
+          version: pnpm version
+          commit: "chore: version packages"
+          title: "chore: version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
