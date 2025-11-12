@@ -1,0 +1,5 @@
+packages:
+  - 'packages/*'
+  # 향후 다른 언어 라이브러리를 위한 확장 가능한 구조
+  # - 'native/*'
+  # - 'libs/*'
