@@ -36,6 +36,12 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Configure npm for publishing
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > $HOME/.npmrc
+          echo "@udit-org:registry=https://registry.npmjs.org/" >> $HOME/.npmrc
+          echo "//registry.npmjs.org/:always-auth=true" >> $HOME/.npmrc
+
       - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@v1
